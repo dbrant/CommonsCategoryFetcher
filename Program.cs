@@ -87,10 +87,8 @@ namespace CommonsCategoryFetcher
                 foreach (Page page in pages)
                 {
                     Console.WriteLine("Downloading: " + page.title);
-
-                    Guid guid = new Guid();
-
-                    saveSingleImage(category, outDir, guid.ToString() + ".jpg", page.imageinfo[0].thumburl);
+                    
+                    saveSingleImage(category, outDir, Guid.NewGuid().ToString() + ".jpg", page.imageinfo[0].thumburl);
                     fileIndex++;
                 }
             }
@@ -132,7 +130,7 @@ namespace CommonsCategoryFetcher
             var myReq = (HttpWebRequest)WebRequest.Create(url);
             var myResp = (HttpWebResponse)myReq.GetResponse();
 
-            string fileName = fileTitle.Replace("File:", "").Replace(" ", "_").Replace(":", "_").Replace("-", "_");
+            string fileName = fileTitle.Replace("File:", "").Replace(" ", "_").Replace(":", "_").Replace("-", "");
             using (FileStream fs = File.Create(categoryDir + Path.DirectorySeparatorChar + fileName))
             {
                 byte[] bytes = new byte[myResp.ContentLength];
